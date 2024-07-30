@@ -28,11 +28,7 @@ fun MinuteInputSetting(
     name: String
 ) {
     val minutes by remember(time) {
-        if (time < 60000) {
-            mutableStateOf(time / 1000)
-        } else {
-            mutableStateOf(time / 60000)
-        }
+        mutableStateOf(time / 60000)
     }
 
     Row(
@@ -43,11 +39,7 @@ fun MinuteInputSetting(
         Column {
             Text(name)
 
-            if (time < 60000) {
-                Text("$minutes sec", style = MaterialTheme.typography.labelMedium)
-            } else {
-                Text("$minutes min", style = MaterialTheme.typography.labelMedium)
-            }
+            Text("$minutes min", style = MaterialTheme.typography.labelMedium)
         }
 
         Column(
@@ -57,11 +49,7 @@ fun MinuteInputSetting(
         ) {
             FilledIconButton(
                 onClick = {
-                    if (time < 60000) {
-                        onTimeChange(time + 10000)
-                    } else {
-                        onTimeChange(time + 60000)
-                    }
+                    onTimeChange(time + 60000)
                 },
                 shape = RoundedCornerShape(
                     topStart = 6.dp,
@@ -77,10 +65,9 @@ fun MinuteInputSetting(
 
             FilledIconButton(
                 onClick = {
-                    if (time > 60000) {
+                    val newTime = time - 60000
+                    if (newTime > 0) {
                         onTimeChange(time - 60000)
-                    } else {
-                        onTimeChange(time - 10000)
                     }
                 },
                 shape = RoundedCornerShape(
